@@ -1,15 +1,28 @@
 
 def draw_field(field):
-    devider_line = "+---" * len(field[0]) + "+"
+    devider_line = "  " + "+---" * len(field[0]) + "+"
+    column_numbers = generate_column_numbers(field)
+    print(column_numbers)
     print(devider_line)
-    for row in field:
-        line = create_line(row)
+    for i, row in enumerate(field):
+        line = create_line(row, i)
         print(line)
         print(devider_line)
 
 
-def create_line(row):
-    line = '|'
+def generate_column_numbers(field):
+    column_numbers = "    " + '   '.join(
+        [
+            str(i + 1)
+            for i
+            in range(len(field[0]))
+        ]
+    )
+    return column_numbers
+
+
+def create_line(row, index):
+    line = f'{index + 1} |'
     for el in row:
         line += f' {el} |'
     return line
@@ -102,3 +115,5 @@ field = [
 field_hint_view = generate_field_hint_view(field)
 mask_field = generate_empty_field(field, '?')
 draw_field(mask_field)
+# row_index = int(input('Введите номер строки: ')) - 1
+# column_index = int(input('Введите номер столбца: ')) - 1
