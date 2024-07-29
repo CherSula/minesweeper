@@ -105,6 +105,14 @@ def generate_view_for_cell(field, r_ind, c_ind):
     return str(counter)
 
 
+def open_cell(row_index, column_index, field_hint_view, mask_field):
+    if field_hint_view[row_index][column_index] == '*':
+        return draw_field(field_hint_view)
+    else:
+        mask_field[row_index][column_index] = field_hint_view[row_index][column_index]
+        return draw_field(mask_field)
+
+
 field = [
     [0, 1, 0, 0],
     [0, 0, 1, 0],
@@ -115,5 +123,6 @@ field = [
 field_hint_view = generate_field_hint_view(field)
 mask_field = generate_empty_field(field, '?')
 draw_field(mask_field)
-# row_index = int(input('Введите номер строки: ')) - 1
-# column_index = int(input('Введите номер столбца: ')) - 1
+row_index = int(input('Введите номер строки открываемой ячейки: ')) - 1
+column_index = int(input('Введите номер столбца открываемой ячейки: ')) - 1
+open_cell(row_index, column_index, field_hint_view, mask_field)
