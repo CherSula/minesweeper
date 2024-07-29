@@ -15,7 +15,7 @@ def create_line(row):
     return line
 
 
-def generate_field_data_view(field):
+def generate_field_hint_view(field):
     data_view = generate_empty_field(field)
     for row_ind in range(len(field)):
         for col_ind in range(len(field[row_ind])):
@@ -96,7 +96,7 @@ field = [
     [0, 1, 0, 0],
     [0, 0, 1, 0],
     [0, 0, 0, 0],
-    [0, 0, 0, 0]-
+    [0, 0, 0, 0]
     ]
 
 empty_field_data_view = [
@@ -113,5 +113,5 @@ field_data_view = [
     ['0', '0', '0', '0']
     ]
 
-field_data_view = generate_field_data_view(field)
+field_data_view = generate_field_hint_view(field)
 draw_field(field_data_view)
