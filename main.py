@@ -24,7 +24,7 @@ def generate_field_hint_view(field):
     return data_view
 
 
-def generate_empty_field(field):
+def generate_empty_field(field, placeholder=''):
     height = len(field)
     width = len(field[0])
     empty_field = []
@@ -32,7 +32,7 @@ def generate_empty_field(field):
         el = []
         empty_field.append(el)
         for _ in range(width):
-            el.append('')
+            el.append(placeholder)
     return empty_field
 
 
@@ -99,19 +99,6 @@ field = [
     [0, 0, 0, 0]
     ]
 
-empty_field_data_view = [
-    ['', '', '', ''],
-    ['', '', '', ''],
-    ['', '', '', ''],
-    ['', '', '', '']
-    ]
-
-field_data_view = [
-    ['1', '*', '2', '1'],
-    ['1', '2', '*', '1'],
-    ['0', '1', '1', '1'],
-    ['0', '0', '0', '0']
-    ]
-
-field_data_view = generate_field_hint_view(field)
-draw_field(field_data_view)
+field_hint_view = generate_field_hint_view(field)
+mask_field = generate_empty_field(field, '?')
+draw_field(mask_field)
