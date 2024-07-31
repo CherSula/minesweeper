@@ -1,3 +1,5 @@
+import random
+
 
 def draw_field(field):
     devider_line = "  " + "+---" * len(field[0]) + "+"
@@ -29,7 +31,7 @@ def create_line(row, index):
 
 
 def generate_field_hint_view(field):
-    data_view = generate_empty_field(field)
+    data_view = generate_empty_field(len(field), len(field[0]))
     for row_ind in range(len(field)):
         for col_ind in range(len(field[row_ind])):
             data_view[row_ind][col_ind] = generate_view_for_cell(
@@ -37,9 +39,7 @@ def generate_field_hint_view(field):
     return data_view
 
 
-def generate_empty_field(field, placeholder=''):
-    height = len(field)
-    width = len(field[0])
+def generate_empty_field(height, width, placeholder=''):
     empty_field = []
     for _ in range(height):
         el = []
@@ -115,17 +115,25 @@ def ask_cell():
     return row_index, column_index
 
 
-field = [
-    [0, 1, 0, 0],
-    [0, 0, 1, 0],
-    [0, 0, 0, 0],
-    [0, 0, 0, 0]
-    ]
+def setup_bombs(field, bombs):
+    height = len(field)
+    width = len(field[0])
+    while bombs > 0:
+        ir = random.randint(0, height-1)
+        ic = random.randint(0, width-1)
+        if field[ir][ic] != 1:
+            field[ir][ic] = 1
+            bombs -= 1
+
 
 bombs_in_game = 2
+height = 3
+width = 4
+field = generate_empty_field(height, width, 0)  # type: ignore
+setup_bombs(field, bombs_in_game)
 safe_cells = len(field) * len(field[0]) - bombs_in_game
 field_hint_view = generate_field_hint_view(field)
-mask_field = generate_empty_field(field, '?')
+mask_field = generate_empty_field(height, width, '?')
 draw_field(mask_field)
 
 while True:
