@@ -105,12 +105,14 @@ def generate_view_for_cell(field, r_ind, c_ind):
     return str(counter)
 
 
-def open_cell(row_index, column_index, field_hint_view, mask_field):
-    if field_hint_view[row_index][column_index] == '*':
-        return draw_field(field_hint_view)
-    else:
-        mask_field[row_index][column_index] = field_hint_view[row_index][column_index]
-        return draw_field(mask_field)
+def open_cell(mask_field, r_index, c_index, field_hint_view):
+    mask_field[r_index][c_index] = field_hint_view[r_index][c_index]
+
+
+def ask_cell():
+    row_index = int(input('Введите номер строки открываемой ячейки: ')) - 1
+    column_index = int(input('Введите номер столбца открываемой ячейки: ')) - 1
+    return row_index, column_index
 
 
 field = [
@@ -123,6 +125,23 @@ field = [
 field_hint_view = generate_field_hint_view(field)
 mask_field = generate_empty_field(field, '?')
 draw_field(mask_field)
-row_index = int(input('Введите номер строки открываемой ячейки: ')) - 1
-column_index = int(input('Введите номер столбца открываемой ячейки: ')) - 1
-open_cell(row_index, column_index, field_hint_view, mask_field)
+
+while True:
+    # считывание ввода пользователя
+    row_index, column_index = ask_cell()
+    # реакция на ввод пользователя
+    if row_index > len(field) or row_index < 0:
+        print('Вы ввели неверное число для строки')
+        continue
+    if column_index > len(field[0]) or column_index < 0:
+        print('Вы ввели неверное число для столбца')
+        continue
+    if field[row_index][column_index]:
+        print('-----------------------------')
+        print('Вы попали на бомбу! GAME OVER')
+        draw_field(field_hint_view)
+        break
+    # изменение состояния игры
+    open_cell(mask_field, row_index, column_index, field_hint_view)
+    # перерисовка игры
+    draw_field(mask_field)
