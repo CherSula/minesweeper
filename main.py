@@ -122,6 +122,8 @@ field = [
     [0, 0, 0, 0]
     ]
 
+bombs_in_game = 2
+safe_cells = len(field) * len(field[0]) - bombs_in_game
 field_hint_view = generate_field_hint_view(field)
 mask_field = generate_empty_field(field, '?')
 draw_field(mask_field)
@@ -139,9 +141,18 @@ while True:
     if field[row_index][column_index]:
         print('-----------------------------')
         print('Вы попали на бомбу! GAME OVER')
+        print('-----------------------------')
         draw_field(field_hint_view)
         break
     # изменение состояния игры
     open_cell(mask_field, row_index, column_index, field_hint_view)
+
     # перерисовка игры
     draw_field(mask_field)
+
+    safe_cells -= 1
+    if safe_cells == 0:
+        print('------------------------------')
+        print('Вы прошли минное поле! YOU WIN')
+        print('------------------------------')
+        break
